@@ -10,15 +10,20 @@
             @page {
                 size: A4;
                 margin-top: 40mm;
-                /* Larger margin for Page 2+ */
                 margin-bottom: 25mm;
                 margin-left: 10mm;
                 margin-right: 10mm;
+
+                @bottom-right {
+                    content: "Page " counter(page) " of " counter(pages);
+                    font-family: 'Courier New', Courier, monospace;
+                    font-size: 8pt;
+                    color: #000;
+                }
             }
 
             @page :first {
                 margin-top: 25mm;
-                /* Keep Page 1 standard */
             }
 
             body {
@@ -36,17 +41,9 @@
             padding: 0;
         }
 
-        /* Fixed Page Number */
+        /* Page Number — rendered via @page margin box in print */
         .page-number-container {
-            position: fixed;
-            top: -20mm;
-            /* In the top margin area */
-            right: 0;
-            font-size: 8pt;
-        }
-
-        .page-number:after {
-            content: "Page " counter(page);
+            display: none;
         }
 
         .container {
@@ -181,10 +178,6 @@
 </head>
 
 <body>
-    <!-- Fixed Page Number -->
-    <div class="page-number-container">
-        <span class="page-number"></span>
-    </div>
 
     <div class="container">
         <div class="watermark">STANSERV</div>
