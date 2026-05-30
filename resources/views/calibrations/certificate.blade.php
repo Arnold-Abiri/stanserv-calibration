@@ -206,7 +206,7 @@
             <div style="font-size: 24pt; font-weight: bold; letter-spacing: 2px;">STANSERV</div>
             <div style="font-size: 12pt; font-weight: bold; margin-top: 2px;">GENUINE SERVICES</div>
             <div style="font-size: 10pt; color: #666; margin-top: 2px;">
-                Stanserv Genuine Services (Pvt) Ltd. | ISO 45001: 2018 OH&S MANAGEMENT SYSTEM CERTIFIED
+                Stanserv Genuine Services (Pvt) Ltd.
             </div>
 
             <div style="text-align: left; margin-top: 5mm; font-weight: bold; font-size: 12pt;">
