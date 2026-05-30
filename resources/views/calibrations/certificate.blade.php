@@ -200,7 +200,7 @@
         <div style="text-align: center; margin-bottom: 5mm; position: relative;">
             <!-- QR Code -->
             <div style="position: absolute; top: 0; right: 0;">
-                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->generate($calibration->calibration_number) !!}
+                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->generate(route('calibrations.certificate', $calibration)) !!}
             </div>
 
             <div style="font-size: 24pt; font-weight: bold; letter-spacing: 2px;">STANSERV</div>
