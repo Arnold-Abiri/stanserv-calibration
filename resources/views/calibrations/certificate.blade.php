@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,21 +9,7 @@
         @media print {
             @page {
                 size: A4;
-                margin-top: 40mm;
-                margin-bottom: 25mm;
-                margin-left: 10mm;
-                margin-right: 10mm;
-
-                @bottom-right {
-                    content: "Page " counter(page) " of " counter(pages);
-                    font-family: 'Courier New', Courier, monospace;
-                    font-size: 8pt;
-                    color: #000;
-                }
-            }
-
-            @page :first {
-                margin-top: 25mm;
+                margin: 0;
             }
 
             body {
@@ -32,66 +18,230 @@
             }
         }
 
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 9pt;
-            line-height: 1.2;
-            color: #000;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Page Number — rendered via @page margin box in print */
-        .page-number-container {
-            display: none;
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9pt;
+            color: #000;
+            background: #fff;
         }
 
-        .container {
-            width: 100%;
-            padding: 0 15mm;
-            box-sizing: border-box;
-        }
-
-        .footer-content {
-            font-size: 10pt;
-            /* Increased for better visibility */
+        /* ── Security border strips (repeat every page) ── */
+        .border-h {
+            position: fixed;
+            left: 4mm;
+            right: 4mm;
+            height: 10px;
+            background: #111;
+            font-size: 6pt;
             font-weight: bold;
+            color: #fff;
             text-align: center;
-            border-top: 1px solid #000;
-            padding-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            letter-spacing: 2px;
+            line-height: 10px;
+            z-index: 200;
         }
 
-        /* Table Styling */
+        .border-top {
+            top: 4mm;
+        }
+
+        .border-bottom {
+            bottom: 8mm;
+        }
+
+        .border-v {
+            position: fixed;
+            top: calc(4mm + 10px);
+            bottom: calc(8mm + 10px);
+            width: 10px;
+            background: #111;
+            font-size: 5.5pt;
+            font-weight: bold;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            writing-mode: vertical-rl;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border-left {
+            left: 4mm;
+            transform: rotate(180deg);
+        }
+
+        .border-right {
+            right: 4mm;
+        }
+
+        /* ── Watermark ── */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-40deg);
+            font-size: 72pt;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ── Certificate wrapper ── */
+        .certificate {
+            position: relative;
+            z-index: 1;
+            padding: 14mm 16mm 14mm 16mm;
+        }
+
+        /* ── Header: Logo | Branding | QR ── */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 3mm;
+            padding-bottom: 3mm;
+            border-bottom: 1.5px solid #000;
+        }
+
+        .header-logo {
+            width: 38mm;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo img {
+            width: 36mm;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .repeating-logo {
+            position: fixed;
+            top: 17mm;
+            left: 16mm;
+            width: 36mm;
+            z-index: 210;
+            pointer-events: none;
+        }
+
+        .repeating-logo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .header-brand {
+            flex: 1;
+            text-align: center;
+            padding: 0 4mm;
+        }
+
+        .brand-stanserv {
+            font-size: 26pt;
+            font-weight: bold;
+            letter-spacing: 4px;
+            font-family: Arial, sans-serif;
+            line-height: 1;
+        }
+
+        .brand-genuine {
+            font-size: 11pt;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-family: Arial, sans-serif;
+            margin-top: 1mm;
+        }
+
+        .brand-stars {
+            font-size: 9pt;
+            letter-spacing: 6px;
+            color: #444;
+            margin: 1mm 0;
+        }
+
+        .brand-tagline {
+            font-size: 7.5pt;
+            color: #333;
+        }
+
+        .header-qr {
+            width: 38mm;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2mm;
+        }
+
+        /* ── Certificate title ── */
+        .cert-title {
+            text-align: center;
+            font-size: 13pt;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 3mm 0 1.5mm;
+            letter-spacing: 0.5px;
+        }
+
+        .cert-title hr {
+            border: none;
+            border-bottom: 1.5px solid #000;
+            margin-top: 1.5mm;
+        }
+
+        /* ── Owner / vehicle info boxes ── */
+        .info-box {
+            border: 1px solid #000;
+            padding: 2.5mm 3mm;
+            font-size: 9pt;
+            font-weight: bold;
+            margin-bottom: 2mm;
+        }
+
+        /* ── Table ── */
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 8pt;
-            margin-bottom: 10px;
+            table-layout: fixed;
         }
 
         th,
         td {
-            border: 1px solid #000;
-            padding: 2px 4px;
-            text-align: right;
+            border: 1px solid #666;
+            padding: 1.5px 3px;
         }
 
         th {
+            background: #e0e0e0;
             text-align: center;
-            /* Center align headers */
-            background-color: #f0f0f0;
-            vertical-align: middle;
             font-weight: bold;
+            font-size: 8pt;
+            vertical-align: middle;
         }
 
-        /* Make table data figures bold */
         tbody td {
-            font-weight: bold !important;
-            font-family: 'Courier New', Courier, monospace;
             text-align: center;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 8pt;
         }
 
-        /* Repeat header on new pages */
         thead {
             display: table-header-group;
         }
@@ -100,302 +250,415 @@
             display: table-footer-group;
         }
 
-        .traceability-section {
-            margin-top: 20px;
-            font-size: 8pt;
+        .table-footer-note {
+            font-size: 7pt;
+            font-weight: bold;
+            text-align: center;
+            border-top: 1.5px solid #000;
+            padding: 1px 3px;
+            line-height: 1.2;
+            margin-top: 0.5mm;
             page-break-inside: avoid;
         }
 
-        .traceability-title {
+        .table-footer-note.compact {
+            font-size: 6.5pt;
+            line-height: 1.1;
+        }
+
+        /* ── Notes below table ── */
+        .notes {
+            margin-top: 4mm;
+            text-align: center;
+            font-size: 8pt;
+        }
+
+        .notes-bold {
+            font-weight: bold;
+            font-size: 9pt;
+            margin-bottom: 1.5mm;
+        }
+
+        .notes-normal {
+            margin-bottom: 1.5mm;
+            line-height: 1.4;
+        }
+
+        .notes-url {
+            font-weight: bold;
+            font-size: 9pt;
+            margin: 2mm 0;
+        }
+
+        /* ── Traceability / legal text ── */
+        .traceability {
+            font-size: 7pt;
+            margin-top: 0;
+        }
+
+        .tr-heading {
             font-weight: bold;
             text-decoration: underline;
-            margin-bottom: 5px;
+            margin-bottom: 0.5mm;
+            display: block;
         }
 
-        .traceability-text {
-            margin-bottom: 5px;
-            text-align: justify;
+        .traceability p {
+            margin-bottom: 0.6mm;
         }
 
-        .signatures {
+        /* ── Signatures ── */
+        .sig-section {
+            display: flex;
+            gap: 5mm;
+            margin-top: 1mm;
+        }
+
+        .sig-block {
+            flex: 1;
+            font-size: 8pt;
+        }
+
+        .sig-line {
+            border-bottom: 1px solid #000;
+            height: 4.5mm;
+            margin-bottom: 1mm;
+        }
+
+        .sig-label {
+            font-size: 7.5pt;
+            color: #333;
+        }
+
+        /* ── Reference condition ── */
+        .ref-condition {
+            font-style: italic;
+            font-size: 7.5pt;
+            text-align: center;
+            margin-top: 0.8mm;
+            padding-top: 0.6mm;
+            border-top: 0.5px solid #888;
+        }
+
+        .table-page {
             display: flex;
             flex-direction: column;
-            /* Stack vertically */
-            align-items: flex-start;
-            /* Align left */
-            margin-top: 30px;
-            font-size: 9pt;
-            position: relative;
-            page-break-inside: avoid;
+            min-height: 188mm;
         }
 
-        .signature-box {
-            width: 50%;
-            text-align: left;
-            padding-top: 5px;
-            margin-bottom: 15px;
-            /* Good spacing between fields */
+        .table-page.continued-page {
+            page-break-before: always;
+            margin-top: 0;
+            padding-top: 37mm;
+            min-height: 252mm;
         }
 
-        .watermark {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 80pt;
-            color: rgba(0, 0, 0, 0.03);
-            z-index: -1;
-            pointer-events: none;
+        .table-page.last-table-page {
+            min-height: auto;
         }
 
-        .microtext-line {
-            position: fixed;
-            font-size: 4.5pt;
-            color: #888;
-            opacity: 0.5;
-            white-space: nowrap;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            pointer-events: none;
+        .table-page-number {
+            margin-top: auto;
+            padding-top: 1mm;
+            font-size: 7pt;
+            text-align: right;
+            padding-right: 2mm;
         }
 
-        .microtext-top {
-            top: 5mm;
-            left: 10mm;
-            right: 10mm;
-            text-align: center;
-        }
-
-        .microtext-bottom {
-            bottom: 5mm;
-            left: 10mm;
-            right: 10mm;
-            text-align: center;
+        .final-page-content {
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            margin-top: 0;
         }
     </style>
 </head>
 
 <body>
+    {{-- Security border strips --}}
+    @php
+        $btext = str_repeat('● STANSERV ', 50);
+        $logoPath = public_path('logo/sgs logo.jpg');
+        $logoMime = file_exists($logoPath) ? (mime_content_type($logoPath) ?: 'image/jpeg') : 'image/jpeg';
+        $logoData = file_exists($logoPath)
+            ? 'data:' . $logoMime . ';base64,' . base64_encode(file_get_contents($logoPath))
+            : asset('logo/sgs logo.jpg');
+    @endphp
+    <div class="border-h border-top">{{ $btext }}</div>
+    <div class="border-v border-left">{{ $btext }}</div>
+    <div class="border-v border-right">{{ $btext }}</div>
 
-    <div class="container">
-        <div class="watermark">STANSERV</div>
+    <div class="repeating-logo">
+        <img src="{{ $logoData }}" alt="SGS Logo">
+    </div>
 
-        <!-- Microtext Border -->
-        @php
-            $microtext = str_repeat('STANSERV GENUINE SERVICES • ', 20);
-        @endphp
-        <div class="microtext-line microtext-top">{{ $microtext }}</div>
-        <div class="microtext-line microtext-bottom">{{ $microtext }}</div>
+    <div class="watermark">STANSERV</div>
 
-        <!-- Header Section -->
-        <div style="text-align: center; margin-bottom: 5mm; position: relative;">
-            <!-- QR Code -->
-            <div style="position: absolute; top: 0; right: 0;">
-                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->generate(route('calibrations.certificate', $calibration)) !!}
+    <div class="certificate">
+
+        {{-- Header: Logo | Branding | Two QR codes --}}
+        <div class="header">
+            <div class="header-logo">
+
             </div>
-
-            <div style="font-size: 24pt; font-weight: bold; letter-spacing: 2px;">STANSERV</div>
-            <div style="font-size: 12pt; font-weight: bold; margin-top: 2px;">GENUINE SERVICES</div>
-            <div style="font-size: 10pt; color: #666; margin-top: 2px;">
-                Stanserv Genuine Services (Pvt) Ltd.
+            <div class="header-brand">
+                <div class="brand-stanserv">STANSERV</div>
+                <div class="brand-genuine">GENUINE SERVICES</div>
+                <div class="brand-stars">&#9733; &nbsp; &#9733;</div>
+                <div class="brand-tagline">Stanserv Genuine Services (Pvt) Ltd.</div>
             </div>
-
-            <div style="text-align: left; margin-top: 5mm; font-weight: bold; font-size: 12pt;">
-                TRUCK CALIBRATION CERTIFICATE No.: {{ $calibration->calibration_number }}
-            </div>
-            <div style="border-bottom: 2px solid #000; margin-top: 2px;"></div>
-        </div>
-
-        <!-- Truck Details -->
-        <div style="border: 1px solid #000; padding: 5px; margin-bottom: 5mm; font-weight: bold;">
-            <div style="display: flex; justify-content: space-between;">
-                <div>TRUCK OWNER: {{ $truck->owner_name ?? 'QUEST COM LOGISTICS (Pvt) Ltd' }}</div>
-                <!-- Page number moved to fixed container -->
-            </div>
-            <div style="margin-top: 5px;">
-                TRUCK / TANKER / INTERLINK REG. No.: {{ $truck->reg_info }}
+            <div class="header-qr">
+                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(52)->generate(route('calibrations.certificate', $calibration)) !!}
             </div>
         </div>
 
-        <!-- Readings Table -->
+        {{-- Certificate title --}}
+        <div class="cert-title">
+            TRUCK CALIBRATION CERTIFICATE NO.: {{ $calibration->calibration_number }}
+            <hr>
+        </div>
+
+        {{-- Owner box --}}
+        <div class="info-box">
+            TRUCK OWNER: {{ $truck->owner_name ?? '&mdash;' }}
+        </div>
+
+        {{-- Vehicle box --}}
+        <div class="info-box">
+            TRUCK / TANKER / INTERLINK REG. No.: {{ $truck->reg_info }}
+        </div>
+
+        {{-- Readings Table --}}
         @if ($calibration->compartments->count() > 0)
             @php
                 $compartments = $calibration->compartments;
                 $isSingleCompartment = $compartments->count() === 1;
+                $safePrint = $safePrint ?? false;
+                $singleCompartmentRowsFirstPage = $safePrint ? 43 : 45;
+                $singleCompartmentRowsContinuedPage = $safePrint ? 35 : 37;
+                $multiCompartmentRowsFirstPage = $safePrint ? 43 : 44;
+                $multiCompartmentRowsContinuedPage = $safePrint ? 35 : 37;
+                $singleCompartmentReadingsFirstPage = $singleCompartmentRowsFirstPage * 4;
+                $singleCompartmentReadingsContinuedPage = $singleCompartmentRowsContinuedPage * 4;
             @endphp
+            @if ($isSingleCompartment)
+                @php
+                    $comp = $compartments->first();
+                    $readings = $calibration->interpolations->where('compartment_number', $comp->number)->values();
+                    $firstPageReadings = $readings->take($singleCompartmentReadingsFirstPage)->values();
+                    $continuedPageReadings = $readings
+                        ->skip($singleCompartmentReadingsFirstPage)
+                        ->values()
+                        ->chunk($singleCompartmentReadingsContinuedPage)
+                        ->map(fn($chunk) => $chunk->values());
+                    $readingPages = collect([$firstPageReadings])
+                        ->merge($continuedPageReadings)
+                        ->filter(fn($chunk) => $chunk->isNotEmpty())
+                        ->values();
+                    $readingPagesTotal = $readingPages->count();
+                @endphp
 
-            <table style="table-layout: fixed;">
-                <thead>
-                    @if ($isSingleCompartment)
-                        @php $comp = $compartments->first(); @endphp
-                        <tr>
-                            <th colspan="8">
-                                COMPARTMENT 1<br>
-                                Reference Height:<br>
-                                {{ $comp->height > 0 ? number_format($comp->height, 0) : 'N/A' }} mm
-                            </th>
-                        </tr>
-                        <tr class="subheader">
-                            <th>Dip (mm)</th>
-                            <th>Volume (L)</th>
-                            <th style="border-left: 2px solid #000;">Dip (mm)</th>
-                            <th>Volume (L)</th>
-                            <th style="border-left: 2px solid #000;">Dip (mm)</th>
-                            <th>Volume (L)</th>
-                            <th style="border-left: 2px solid #000;">Dip (mm)</th>
-                            <th>Volume (L)</th>
-                        </tr>
-                    @else
-                        <tr>
-                            @foreach ($compartments as $compartment)
-                                <th colspan="2" style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">
-                                    COMPARTMENT {{ $loop->iteration }}<br>
-                                    Reference Height:<br>
-                                    {{ $compartment->height > 0 ? number_format($compartment->height, 0) : 'N/A' }} mm
-                                </th>
-                            @endforeach
-                        </tr>
-                        <tr class="subheader">
-                            @foreach ($compartments as $compartment)
-                                <th style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">Dip<br>mm</th>
-                                <th>Volume<br>Litres</th>
-                            @endforeach
-                        </tr>
-                    @endif
-                </thead>
-                <tfoot>
-                    <tr>
-                        <td colspan="{{ $isSingleCompartment ? 8 : $compartments->count() * 2 }}"
-                            style="border: none;">
-                            <div class="footer-content">
-                                <p style="font-weight: bold; margin: 2px 0;">ALL DIP HEIGHT READINGS MUST BE TAKEN ON
-                                    LEVEL GROUND</p>
-                                <p style="margin: 2px 0;">This certificate is valid for two calendar years from date of
-                                    calibration provided the truck/tanker combination is as recorded above.</p>
-                                <p style="font-weight: bold; margin: 2px 0;">www.sgs-stanserv.com</p>
-                            </div>
-                        </td>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    @if ($isSingleCompartment)
-                        @php
-                            $readings = $calibration->interpolations
-                                ->where('compartment_number', $comp->number)
-                                ->values();
-                            $totalReadings = $readings->count();
-                            $quarter = ceil($totalReadings / 4);
-                        @endphp
-                        @for ($i = 0; $i < $quarter; $i++)
-                            @php
-                                $col1 = $readings->get($i);
-                                $col2 = $readings->get($i + $quarter);
-                                $col3 = $readings->get($i + $quarter * 2);
-                                $col4 = $readings->get($i + $quarter * 3);
-                            @endphp
-                            <tr>
-                                <td>{{ $col1 ? number_format($col1->dip_mm, 0) : '' }}</td>
-                                <td>{{ $col1 ? number_format($col1->volume, 0, '.', '') : '' }}</td>
-                                <td style="border-left: 2px solid #000;">
-                                    {{ $col2 ? number_format($col2->dip_mm, 0) : '' }}</td>
-                                <td>{{ $col2 ? number_format($col2->volume, 0, '.', '') : '' }}</td>
-                                <td style="border-left: 2px solid #000;">
-                                    {{ $col3 ? number_format($col3->dip_mm, 0) : '' }}</td>
-                                <td>{{ $col3 ? number_format($col3->volume, 0, '.', '') : '' }}</td>
-                                <td style="border-left: 2px solid #000;">
-                                    {{ $col4 ? number_format($col4->dip_mm, 0) : '' }}</td>
-                                <td>{{ $col4 ? number_format($col4->volume, 0, '.', '') : '' }}</td>
-                            </tr>
-                        @endfor
-                    @else
-                        @php
-                            $maxRows =
-                                $calibration->interpolations->groupBy('compartment_number')->map->count()->max() ?? 0;
-                        @endphp
-                        @for ($i = 0; $i < $maxRows; $i++)
-                            <tr>
-                                @foreach ($compartments as $compartment)
+                @foreach ($readingPages as $pageReadings)
+                    @php
+                        $columnLength = (int) ceil($pageReadings->count() / 4);
+                    @endphp
+                    <div
+                        class="table-page {{ $loop->first ? '' : 'continued-page' }} {{ $loop->last ? 'last-table-page' : '' }}">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="8">
+                                        COMPARTMENT 1<br>
+                                        Reference Height:<br>
+                                        {{ $comp->height > 0 ? number_format($comp->height, 0) : 'N/A' }} mm
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Dip (mm)</th>
+                                    <th>Volume (L)</th>
+                                    <th style="border-left: 2px solid #000;">Dip (mm)</th>
+                                    <th>Volume (L)</th>
+                                    <th style="border-left: 2px solid #000;">Dip (mm)</th>
+                                    <th>Volume (L)</th>
+                                    <th style="border-left: 2px solid #000;">Dip (mm)</th>
+                                    <th>Volume (L)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for ($i = 0; $i < $columnLength; $i++)
                                     @php
-                                        $reading = $calibration->interpolations
-                                            ->where('compartment_number', $compartment->number)
-                                            ->values()
-                                            ->get($i);
+                                        $c1 = $pageReadings->get($i);
+                                        $c2 = $pageReadings->get($i + $columnLength);
+                                        $c3 = $pageReadings->get($i + $columnLength * 2);
+                                        $c4 = $pageReadings->get($i + $columnLength * 3);
                                     @endphp
-                                    <td style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">
-                                        {{ $reading ? number_format($reading->dip_mm, 0) : '' }}
-                                    </td>
-                                    <td>
-                                        {{ $reading ? number_format($reading->volume, 0, '.', '') : '' }}
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endfor
-                    @endif
-                </tbody>
-            </table>
+                                    <tr>
+                                        <td>{{ $c1 ? number_format($c1->dip_mm, 0) : '' }}</td>
+                                        <td>{{ $c1 ? number_format($c1->volume, 0, '.', '') : '' }}</td>
+                                        <td style="border-left: 2px solid #000;">
+                                            {{ $c2 ? number_format($c2->dip_mm, 0) : '' }}</td>
+                                        <td>{{ $c2 ? number_format($c2->volume, 0, '.', '') : '' }}</td>
+                                        <td style="border-left: 2px solid #000;">
+                                            {{ $c3 ? number_format($c3->dip_mm, 0) : '' }}</td>
+                                        <td>{{ $c3 ? number_format($c3->volume, 0, '.', '') : '' }}</td>
+                                        <td style="border-left: 2px solid #000;">
+                                            {{ $c4 ? number_format($c4->dip_mm, 0) : '' }}</td>
+                                        <td>{{ $c4 ? number_format($c4->volume, 0, '.', '') : '' }}</td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table>
+                        @if ($loop->last)
+                            <div class="table-footer-note compact">
+                                ALL DIP HEIGHT READINGS MUST BE TAKEN ON LEVEL GROUND &nbsp;|&nbsp;
+                                This certificate is valid for two calendar years from date of calibration provided the
+                                truck/tanker combination is as recorded above. &nbsp;|&nbsp;
+                                <strong>www.sgs-stanserv.com</strong>
+                            </div>
+                        @endif
+                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $readingPagesTotal }}</div>
+                    </div>
+                @endforeach
+            @else
+                @php
+                    $readingsByCompartment = $compartments->mapWithKeys(
+                        fn($compartment) => [
+                            $compartment->number => $calibration->interpolations
+                                ->where('compartment_number', $compartment->number)
+                                ->values(),
+                        ],
+                    );
+                    $maxRows = $readingsByCompartment->map->count()->max() ?? 0;
+                    $firstPageRows =
+                        $maxRows > 0 ? collect(range(0, min($multiCompartmentRowsFirstPage, $maxRows) - 1)) : collect();
+                    $continuedRows =
+                        $maxRows > $multiCompartmentRowsFirstPage
+                            ? collect(range($multiCompartmentRowsFirstPage, $maxRows - 1))
+                                ->chunk($multiCompartmentRowsContinuedPage)
+                                ->map(fn($chunk) => $chunk->values())
+                            : collect();
+                    $rowPages = collect();
+                    if ($firstPageRows->isNotEmpty()) {
+                        $rowPages->push($firstPageRows->values());
+                    }
+                    $rowPages = $rowPages->merge($continuedRows)->values();
+                    if ($rowPages->isEmpty()) {
+                        $rowPages = collect([collect()]);
+                    }
+                    $rowPagesTotal = $rowPages->count();
+                @endphp
+
+                @foreach ($rowPages as $rowPage)
+                    <div
+                        class="table-page {{ $loop->first ? '' : 'continued-page' }} {{ $loop->last ? 'last-table-page' : '' }}">
+                        <table>
+                            <thead>
+                                <tr>
+                                    @foreach ($compartments as $compartment)
+                                        <th colspan="2"
+                                            style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">
+                                            COMPARTMENT {{ $loop->iteration }}<br>
+                                            Reference Height:<br>
+                                            {{ $compartment->height > 0 ? number_format($compartment->height, 0) : 'N/A' }}
+                                            mm
+                                        </th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    @foreach ($compartments as $compartment)
+                                        <th style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">Dip<br>mm
+                                        </th>
+                                        <th>Volume<br>Litres</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($rowPage as $rowIndex)
+                                    <tr>
+                                        @foreach ($compartments as $compartment)
+                                            @php
+                                                $reading = $readingsByCompartment
+                                                    ->get($compartment->number)
+                                                    ->get($rowIndex);
+                                            @endphp
+                                            <td style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">
+                                                {{ $reading ? number_format($reading->dip_mm, 0) : '' }}
+                                            </td>
+                                            <td>{{ $reading ? number_format($reading->volume, 0, '.', '') : '' }}</td>
+                                        @endforeach
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="{{ $compartments->count() * 2 }}">&nbsp;</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+
+                        @if ($loop->last)
+                            <div class="table-footer-note">
+                                ALL DIP HEIGHT READINGS MUST BE TAKEN ON LEVEL GROUND<br>
+                                This certificate is valid for two calendar years from date of calibration provided the
+                                truck/tanker combination is as recorded above.<br>
+                                <strong>www.sgs-stanserv.com</strong>
+                            </div>
+                        @endif
+
+                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $rowPagesTotal }}</div>
+                    </div>
+                @endforeach
+
+            @endif
         @endif
 
-        <div class="traceability-section">
-            <div style="font-weight: bold; text-decoration: underline; margin-bottom: 5px;">
-                ALL COMPARTMENTS CALIBRATED FROM THE BOTTOM WITH THE BOTTOM LINES COMPLETELY EMPTY AND MANIFOLD VOLUME
-                MUST BE INCLUDED AS CAPACITY FOR COMPARTMENT NUMBER ONE.
+        <div class="final-page-content">
+            {{-- Traceability / legal notes --}}
+            <div class="traceability">
+                <span class="tr-heading">ALL COMPARTMENTS CALIBRATED FROM THE BOTTOM WITH BOTTOM LINES COMPLETELY EMPTY.
+                    MANIFOLD VOLUME MUST BE INCLUDED AS CAPACITY FOR COMPARTMENT NUMBER ONE.</span>
+                <span class="tr-heading">TRACEABILITY OF MEASUREMENT</span>
+                <p>THE ACCURACIES OF ALL MEASUREMENTS ARE TRACEABLE TO NATIONAL STANDARDS AS MAINTAINED BY THE TRADE
+                    MEASURES (ASSIZE) (AMENDMENT REGULATIONS 1989, THROUGH VERIFICATION CERTIFICATE NUMBER 0010.</p>
+                <span class="tr-heading">IN ACCORDANCE WITH THE GOVERNMENT TRADE MEASURES (ASSIZE) REGULATIONS THIS
+                    CERTIFICATE MUST NOT BE USED FOR RETAIL PURPOSES.</span>
+                <p><strong>COUPLING HEIGHTS:</strong> Fore: 10 mm &nbsp;/&nbsp; Aft: ______ mm</p>
+                <p><strong>ALL DIP HEIGHT READINGS MUST BE TAKEN FROM THE MARKED POSITION OF EACH MANHOLE, WITH AIRBAGS
+                        ON THE HORSE COMPLETELY EMPTY. (EXTRA CAUTION WHEN CHECKING REFERENCE HEIGHT ON COMPARTMENT
+                        4)</strong>
+                </p>
             </div>
 
-            <div style="font-weight: bold; text-decoration: underline; margin-bottom: 5px;">
-                TRACEABILITY OF MEASUREMENT
+            {{-- Signatures --}}
+            <div class="sig-section">
+                <div class="sig-block">
+                    <div class="sig-line"></div>
+                    <div class="sig-label">Date</div>
+                </div>
+                <div class="sig-block">
+                    <div class="sig-line"></div>
+                    <div class="sig-label">Valid Until</div>
+                </div>
+                <div class="sig-block">
+                    <div class="sig-line"></div>
+                    <div class="sig-label">Authorized Signature</div>
+                </div>
             </div>
 
-            <p style="margin-bottom: 10px;">
-                THE ACCURACIES OF ALL MEASUREMENTS ARE TRACEABLE TO NATIONAL STANDARDS AS MAINTAINED BY THE TRADE
-                MEASURES (ASSIZE) (AMENDMENT REGULATIONS 1989, THROUGH VERIFICATION CERTIFICATE NUMBER 0010.
-            </p>
-
-            <div style="font-weight: bold; text-decoration: underline; margin-bottom: 15px;">
-                IN ACCORDANCE WITH THE GOVERNMENT TRADE MEASURES (ASSIZE) REGULATIONS THIS CERTIFICATE MUST NOT BE USED
-                FOR RETAIL PURPOSES.
+            {{-- Reference condition --}}
+            <div class="ref-condition">
+                The above volumes are given at reference condition of 20&deg;C and 0 Bar Gauged Pressure.
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <span style="font-weight: bold;">COUPLING HEIGHTS:</span> Fore: 10 mm / Aft: ______ mm
-            </div>
-
-            <div style="font-weight: bold; margin-bottom: 20px;">
-                ALL DIP HEIGHT READINGS MUST BE TAKEN AT ALL TIMES FROM THE MARKED POSITION OF EACH MANHOLE, WITH
-                AIRBAGS ON THE HORSE COMPLETELY EMPTY. (EXTRA CAUTION SHOULD BE TAKEN WHEN CHECKING REFERENCE HEIGHT ON
-                COMPARTMENT NUMBER 4)
-            </div>
         </div>
 
-        <!-- Signatures -->
-        <div class="signatures">
-            <div class="signature-box">
-                <div class="signature-line"></div>
-                <div>Date: ________________________________</div>
-            </div>
-            <div class="signature-box" style="margin-top: 10px;">
-                <div class="signature-line"></div>
-                <div>Valid Until: ________________________________</div>
-            </div>
-            <div class="signature-box" style="margin-top: 20px;">
-                <div class="signature-line"></div>
-                <div>________________________________</div>
-                <div>Authorized Signature</div>
-            </div>
-        </div>
-
-        <!-- Reference condition statement - after signatures -->
-        <div style="font-style: italic; margin-top: 30px; font-size: 9pt; text-align: center;">
-            The above volumes are given at reference condition of 20°C and 0 Bar Gauged Pressure.
-        </div>
     </div>
+
     <script>
         window.onload = function() {
             setTimeout(function() {
                 window.print();
             }, 500);
-        }
+        };
     </script>
 </body>
 
