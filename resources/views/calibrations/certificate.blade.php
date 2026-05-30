@@ -140,34 +140,6 @@
             /* Good spacing between fields */
         }
 
-        .seal-container {
-            position: absolute;
-            bottom: -60mm;
-            /* Moved down further as requested */
-            right: 0;
-            z-index: 5;
-            opacity: 0.8;
-            transform: rotate(-15deg);
-            pointer-events: none;
-        }
-
-        .seal {
-            width: 40mm;
-            height: 40mm;
-            background-color: rgba(180, 0, 0, 0.1);
-            /* Transparent red */
-            border: 3px solid #b00;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #b00;
-            font-weight: bold;
-            font-size: 10pt;
-            text-align: center;
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #b00;
-        }
-
         .watermark {
             position: fixed;
             top: 50%;
@@ -405,15 +377,6 @@
 
         <!-- Signatures -->
         <div class="signatures">
-            <div class="seal-container">
-                <div class="seal">
-                    <div>
-                        STANSERV<br>
-                        GENUINE<br>
-                        SERVICES
-                    </div>
-                </div>
-            </div>
             <div class="signature-box">
                 <div class="signature-line"></div>
                 <div>Date: ________________________________</div>
