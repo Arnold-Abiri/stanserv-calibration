@@ -370,6 +370,15 @@
             display: flex;
             flex-direction: column;
             margin-top: 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .final-page-content.new-page {
+            page-break-before: always;
+            break-before: page;
+            padding-top: 37mm;
+            min-height: 252mm;
         }
     </style>
 </head>
@@ -429,17 +438,22 @@
         </div>
 
         {{-- Readings Table --}}
+        @php
+            $finalContentStartsNewPage = false;
+            $finalContentPageNumber = null;
+        @endphp
         @if ($calibration->compartments->count() > 0)
             @php
                 $compartments = $calibration->compartments;
                 $isSingleCompartment = $compartments->count() === 1;
                 $safePrint = $safePrint ?? false;
                 $singleCompartmentRowsFirstPage = $safePrint ? 43 : 45;
-                $singleCompartmentRowsContinuedPage = $safePrint ? 35 : 37;
+                $singleCompartmentRowsContinuedPage = $safePrint ? 45 : 54;
                 $multiCompartmentRowsFirstPage = $safePrint ? 43 : 44;
-                $multiCompartmentRowsContinuedPage = $safePrint ? 35 : 37;
+                $multiCompartmentRowsContinuedPage = $safePrint ? 45 : 54;
                 $singleCompartmentReadingsFirstPage = $singleCompartmentRowsFirstPage * 4;
                 $singleCompartmentReadingsContinuedPage = $singleCompartmentRowsContinuedPage * 4;
+                $finalContentShareRowsLimit = 50;
             @endphp
             @if ($isSingleCompartment)
                 @php
@@ -456,6 +470,10 @@
                         ->filter(fn($chunk) => $chunk->isNotEmpty())
                         ->values();
                     $readingPagesTotal = $readingPages->count();
+                    $lastTableRows = $readingPages->isNotEmpty() ? (int) ceil($readingPages->last()->count() / 4) : 0;
+                    $finalContentStartsNewPage = $lastTableRows > $finalContentShareRowsLimit;
+                    $certificatePagesTotal = $readingPagesTotal + ($finalContentStartsNewPage ? 1 : 0);
+                    $finalContentPageNumber = $finalContentStartsNewPage ? $certificatePagesTotal : null;
                 @endphp
 
                 @foreach ($readingPages as $pageReadings)
@@ -516,7 +534,8 @@
                                 <strong>www.sgs-stanserv.com</strong>
                             </div>
                         @endif
-                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $readingPagesTotal }}</div>
+                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $certificatePagesTotal }}
+                        </div>
                     </div>
                 @endforeach
             @else
@@ -546,6 +565,10 @@
                         $rowPages = collect([collect()]);
                     }
                     $rowPagesTotal = $rowPages->count();
+                    $lastTableRows = $rowPages->isNotEmpty() ? $rowPages->last()->count() : 0;
+                    $finalContentStartsNewPage = $lastTableRows > $finalContentShareRowsLimit;
+                    $certificatePagesTotal = $rowPagesTotal + ($finalContentStartsNewPage ? 1 : 0);
+                    $finalContentPageNumber = $finalContentStartsNewPage ? $certificatePagesTotal : null;
                 @endphp
 
                 @foreach ($rowPages as $rowPage)
@@ -604,14 +627,15 @@
                             </div>
                         @endif
 
-                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $rowPagesTotal }}</div>
+                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $certificatePagesTotal }}
+                        </div>
                     </div>
                 @endforeach
 
             @endif
         @endif
 
-        <div class="final-page-content">
+        <div class="final-page-content {{ $finalContentStartsNewPage ? 'new-page' : '' }}">
             {{-- Traceability / legal notes --}}
             <div class="traceability">
                 <span class="tr-heading">ALL COMPARTMENTS CALIBRATED FROM THE BOTTOM WITH BOTTOM LINES COMPLETELY EMPTY.
@@ -648,6 +672,11 @@
             <div class="ref-condition">
                 The above volumes are given at reference condition of 20&deg;C and 0 Bar Gauged Pressure.
             </div>
+
+            @if ($finalContentStartsNewPage && $finalContentPageNumber)
+                <div class="table-page-number">Page {{ $finalContentPageNumber }} of {{ $finalContentPageNumber }}
+                </div>
+            @endif
 
         </div>
 
