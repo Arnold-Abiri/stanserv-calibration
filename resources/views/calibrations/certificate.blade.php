@@ -185,7 +185,16 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 2mm;
+            gap: 1mm;
+        }
+
+        .qr-verify-text {
+            width: 52px;
+            font-size: 5.5pt;
+            font-weight: bold;
+            line-height: 1.05;
+            text-align: center;
+            text-transform: uppercase;
         }
 
         /* ── Certificate title ── */
@@ -418,6 +427,7 @@
             </div>
             <div class="header-qr">
                 {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(52)->generate(route('calibrations.certificate', $calibration)) !!}
+                <div class="qr-verify-text">Scan QR code to verify certificate</div>
             </div>
         </div>
 
