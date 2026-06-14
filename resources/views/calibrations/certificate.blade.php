@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -143,6 +143,18 @@
             height: auto;
             object-fit: contain;
             display: block;
+        }
+
+        .repeating-qr {
+            position: fixed;
+            top: 14mm;
+            right: 16mm;
+            width: 38mm;
+            z-index: 210;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1mm;
         }
 
         .header-brand {
@@ -401,6 +413,9 @@
         $logoData = file_exists($logoPath)
             ? 'data:' . $logoMime . ';base64,' . base64_encode(file_get_contents($logoPath))
             : asset('logo/sgs logo.jpg');
+            
+        $qrSvg = SimpleSoftwareIO\QrCode\Facades\QrCode::size(52)->generate(route('calibrations.certificate', $calibration));
+        $qrData = 'data:image/svg+xml;base64,' . base64_encode($qrSvg);
     @endphp
     <div class="border-h border-top">{{ $btext }}</div>
     <div class="border-v border-left">{{ $btext }}</div>
@@ -408,6 +423,11 @@
 
     <div class="repeating-logo">
         <img src="{{ $logoData }}" alt="SGS Logo">
+    </div>
+
+    <div class="repeating-qr">
+        <img src="{{ $qrData }}" alt="QR Code" style="width: 52px; height: 52px; display: block;">
+        <div class="qr-verify-text">Scan QR code to verify certificate</div>
     </div>
 
     <div class="watermark">STANSERV</div>
@@ -426,8 +446,6 @@
                 <div class="brand-tagline">Stanserv Genuine Services (Pvt) Ltd.</div>
             </div>
             <div class="header-qr">
-                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(52)->generate(route('calibrations.certificate', $calibration)) !!}
-                <div class="qr-verify-text">Scan QR code to verify certificate</div>
             </div>
         </div>
 
