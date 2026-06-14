@@ -516,7 +516,7 @@
                                     <th colspan="8">
                                         COMPARTMENT 1<br>
                                         Reference Height:<br>
-                                        {{ $comp->height > 0 ? number_format($comp->height, 0) : 'N/A' }} mm
+                                        {{ $comp->height > 0 ? number_format($comp->height, 0, '.', ' ') : 'N/A' }} mm
                                     </th>
                                 </tr>
                                 <tr>
@@ -539,17 +539,17 @@
                                         $c4 = $pageReadings->get($i + $columnLength * 3);
                                     @endphp
                                     <tr>
-                                        <td>{{ $c1 ? number_format($c1->dip_mm, 0) : '' }}</td>
-                                        <td>{{ $c1 ? number_format($c1->volume, 0, '.', '') : '' }}</td>
+                                        <td>{{ $c1 ? number_format($c1->dip_mm, 0, '.', ' ') : '' }}</td>
+                                        <td>{{ $c1 ? number_format($c1->volume, 0, '.', ' ') : '' }}</td>
                                         <td style="border-left: 2px solid #000;">
-                                            {{ $c2 ? number_format($c2->dip_mm, 0) : '' }}</td>
-                                        <td>{{ $c2 ? number_format($c2->volume, 0, '.', '') : '' }}</td>
+                                            {{ $c2 ? number_format($c2->dip_mm, 0, '.', ' ') : '' }}</td>
+                                        <td>{{ $c2 ? number_format($c2->volume, 0, '.', ' ') : '' }}</td>
                                         <td style="border-left: 2px solid #000;">
-                                            {{ $c3 ? number_format($c3->dip_mm, 0) : '' }}</td>
-                                        <td>{{ $c3 ? number_format($c3->volume, 0, '.', '') : '' }}</td>
+                                            {{ $c3 ? number_format($c3->dip_mm, 0, '.', ' ') : '' }}</td>
+                                        <td>{{ $c3 ? number_format($c3->volume, 0, '.', ' ') : '' }}</td>
                                         <td style="border-left: 2px solid #000;">
-                                            {{ $c4 ? number_format($c4->dip_mm, 0) : '' }}</td>
-                                        <td>{{ $c4 ? number_format($c4->volume, 0, '.', '') : '' }}</td>
+                                            {{ $c4 ? number_format($c4->dip_mm, 0, '.', ' ') : '' }}</td>
+                                        <td>{{ $c4 ? number_format($c4->volume, 0, '.', ' ') : '' }}</td>
                                     </tr>
                                 @endfor
                             </tbody>
@@ -610,7 +610,7 @@
                                             style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">
                                             COMPARTMENT {{ $loop->iteration }}<br>
                                             Reference Height:<br>
-                                            {{ $compartment->height > 0 ? number_format($compartment->height, 0) : 'N/A' }}
+                                            {{ $compartment->height > 0 ? number_format($compartment->height, 0, '.', ' ') : 'N/A' }}
                                             mm
                                         </th>
                                     @endforeach
@@ -633,9 +633,9 @@
                                                     ->get($rowIndex);
                                             @endphp
                                             <td style="{{ !$loop->first ? 'border-left: 2px solid #000;' : '' }}">
-                                                {{ $reading ? number_format($reading->dip_mm, 0) : '' }}
+                                                {{ $reading ? number_format($reading->dip_mm, 0, '.', ' ') : '' }}
                                             </td>
-                                            <td>{{ $reading ? number_format($reading->volume, 0, '.', '') : '' }}</td>
+                                            <td>{{ $reading ? number_format($reading->volume, 0, '.', ' ') : '' }}</td>
                                         @endforeach
                                     </tr>
                                 @empty
