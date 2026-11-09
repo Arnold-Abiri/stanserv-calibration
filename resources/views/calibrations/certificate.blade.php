@@ -36,17 +36,18 @@
             position: fixed;
             left: 4mm;
             right: 4mm;
-            height: 10px;
-            background: #111;
+            height: 12px;
+            background: transparent;
             font-size: 6pt;
             font-weight: bold;
-            color: #fff;
+            color: #000;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
-            letter-spacing: 2px;
-            line-height: 10px;
-            z-index: 200;
+            letter-spacing: 1.5px;
+            line-height: 12px;
+            z-index: 300;
+            font-family: Arial, sans-serif;
         }
 
         .border-top {
@@ -54,25 +55,27 @@
         }
 
         .border-bottom {
-            bottom: 8mm;
+            bottom: 4mm;
         }
 
         .border-v {
             position: fixed;
-            top: calc(4mm + 10px);
-            bottom: calc(8mm + 10px);
-            width: 10px;
-            background: #111;
-            font-size: 5.5pt;
+            top: 4mm;
+            bottom: 4mm;
+            width: 12px;
+            background: transparent;
+            font-size: 6pt;
             font-weight: bold;
-            color: #fff;
+            color: #000;
             white-space: nowrap;
             overflow: hidden;
             writing-mode: vertical-rl;
-            z-index: 200;
+            z-index: 300;
             display: flex;
             align-items: center;
             justify-content: center;
+            letter-spacing: 1.5px;
+            font-family: Arial, sans-serif;
         }
 
         .border-left {
@@ -113,27 +116,27 @@
             align-items: flex-start;
             margin-bottom: 3mm;
             padding-bottom: 3mm;
-            border-bottom: 1.5px solid #000;
+            height: 18mm;
         }
 
         .header-logo {
-            width: 38mm;
+            width: 55mm;
             flex-shrink: 0;
             display: flex;
             align-items: center;
         }
 
         .header-logo img {
-            width: 36mm;
+            width: 55mm;
             height: auto;
             object-fit: contain;
         }
 
         .repeating-logo {
             position: fixed;
-            top: 17mm;
+            top: 14mm;
             left: 16mm;
-            width: 36mm;
+            width: 55mm;
             z-index: 210;
             pointer-events: none;
         }
@@ -147,9 +150,9 @@
 
         .repeating-qr {
             position: fixed;
-            top: 14mm;
+            top: 11mm;
             right: 16mm;
-            width: 38mm;
+            width: 90px;
             z-index: 210;
             display: flex;
             flex-direction: column;
@@ -157,56 +160,76 @@
             gap: 1mm;
         }
 
-        .header-brand {
-            flex: 1;
-            text-align: center;
-            padding: 0 4mm;
-        }
-
-        .brand-stanserv {
-            font-size: 26pt;
-            font-weight: bold;
-            letter-spacing: 4px;
-            font-family: Arial, sans-serif;
-            line-height: 1;
-        }
-
-        .brand-genuine {
-            font-size: 11pt;
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-family: Arial, sans-serif;
-            margin-top: 1mm;
-        }
-
-        .brand-stars {
-            font-size: 9pt;
-            letter-spacing: 6px;
-            color: #444;
-            margin: 1mm 0;
-        }
-
-        .brand-tagline {
-            font-size: 7.5pt;
-            color: #333;
-        }
-
-        .header-qr {
-            width: 38mm;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 1mm;
+        .repeating-header-line {
+            position: fixed;
+            top: 32mm;
+            left: 16mm;
+            right: 16mm;
+            border-bottom: 1.5px solid #000;
+            z-index: 205;
         }
 
         .qr-verify-text {
-            width: 52px;
-            font-size: 5.5pt;
+            width: 90px;
+            font-size: 6pt;
             font-weight: bold;
-            line-height: 1.05;
+            line-height: 1.1;
             text-align: center;
             text-transform: uppercase;
+        }
+
+        .repeating-header-center {
+            position: fixed;
+            top: 10mm;
+            left: 73mm;
+            right: 44mm;
+            height: 20mm;
+            z-index: 210;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3mm;
+        }
+
+        .header-saz-badge {
+            width: 17mm;
+            height: 17mm;
+            flex-shrink: 0;
+        }
+
+        .header-saz-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .header-center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .header-red-number {
+            color: #c02424;
+            font-size: 14pt;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .header-red-iso {
+            color: #c02424;
+            font-size: 6.5pt;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            line-height: 1.15;
+            margin-top: 0.5mm;
         }
 
         /* ── Certificate title ── */
@@ -364,13 +387,13 @@
         .table-page {
             display: flex;
             flex-direction: column;
-            min-height: 188mm;
+            min-height: 180mm;
         }
 
         .table-page.continued-page {
             page-break-before: always;
             margin-top: 0;
-            padding-top: 37mm;
+            padding-top: 36mm;
             min-height: 252mm;
         }
 
@@ -380,10 +403,12 @@
 
         .table-page-number {
             margin-top: auto;
-            padding-top: 1mm;
-            font-size: 7pt;
+            padding-top: 2mm;
+            font-size: 7.5pt;
+            font-weight: bold;
             text-align: right;
             padding-right: 2mm;
+            color: #000;
         }
 
         .final-page-content {
@@ -416,8 +441,22 @@
             
         $qrSvg = SimpleSoftwareIO\QrCode\Facades\QrCode::size(52)->generate(route('calibrations.certificate', $calibration));
         $qrData = 'data:image/svg+xml;base64,' . base64_encode($qrSvg);
+
+        $sazSealPath = public_path('logo/saz-logo.png');
+        if (!file_exists($sazSealPath)) {
+            $sazSealPath = public_path('logo/saz-seal.svg');
+        }
+        $sazMime = file_exists($sazSealPath) ? (mime_content_type($sazSealPath) ?: 'image/png') : 'image/png';
+        $sazSealData = file_exists($sazSealPath)
+            ? 'data:' . $sazMime . ';base64,' . base64_encode(file_get_contents($sazSealPath))
+            : asset('logo/saz-logo.png');
+
+        $redPrintNo = $calibration->print_number
+            ?? ($calibration->meta['print_number'] ?? null)
+            ?? (preg_match('/(\d+)\s*$/', $calibration->calibration_number, $m) ? $m[1] : sprintf('%05d', $calibration->id));
     @endphp
     <div class="border-h border-top">{{ $btext }}</div>
+    <div class="border-h border-bottom">{{ $btext }}</div>
     <div class="border-v border-left">{{ $btext }}</div>
     <div class="border-v border-right">{{ $btext }}</div>
 
@@ -430,23 +469,25 @@
         <div class="qr-verify-text">Scan QR code to verify certificate</div>
     </div>
 
+    <div class="repeating-header-center">
+        <div class="header-center-content">
+            <div class="header-red-number">{{ $redPrintNo }}</div>
+            <div class="header-red-iso">ISO 45001: 2018 OH&S MANAGEMENT SYSTEM CERTIFIED</div>
+        </div>
+        @if($sazSealData)
+        <div class="header-saz-badge">
+            <img src="{{ $sazSealData }}" alt="SAZ Tag">
+        </div>
+        @endif
+    </div>
+
+    <div class="repeating-header-line"></div>
+
     <div class="watermark">STANSERV</div>
 
     <div class="certificate">
 
-        {{-- Header: Logo | Branding | Two QR codes --}}
         <div class="header">
-            <div class="header-logo">
-
-            </div>
-            <div class="header-brand">
-                <div class="brand-stanserv">STANSERV</div>
-                <div class="brand-genuine">GENUINE SERVICES</div>
-                <div class="brand-stars">&#9733; &nbsp; &#9733;</div>
-                <div class="brand-tagline">Stanserv Genuine Services (Pvt) Ltd.</div>
-            </div>
-            <div class="header-qr">
-            </div>
         </div>
 
         {{-- Certificate title --}}
@@ -562,8 +603,9 @@
                                 <strong>www.sgs-stanserv.com</strong>
                             </div>
                         @endif
-                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $certificatePagesTotal }}
-                        </div>
+                        @if (!$loop->last || $finalContentStartsNewPage)
+                            <div class="table-page-number">Page {{ $loop->iteration }} of {{ $certificatePagesTotal }}</div>
+                        @endif
                     </div>
                 @endforeach
             @else
@@ -655,8 +697,9 @@
                             </div>
                         @endif
 
-                        <div class="table-page-number">Page {{ $loop->iteration }} of {{ $certificatePagesTotal }}
-                        </div>
+                        @if (!$loop->last || $finalContentStartsNewPage)
+                            <div class="table-page-number">Page {{ $loop->iteration }} of {{ $certificatePagesTotal }}</div>
+                        @endif
                     </div>
                 @endforeach
 
@@ -701,10 +744,7 @@
                 The above volumes are given at reference condition of 20&deg;C and 0 Bar Gauged Pressure.
             </div>
 
-            @if ($finalContentStartsNewPage && $finalContentPageNumber)
-                <div class="table-page-number">Page {{ $finalContentPageNumber }} of {{ $finalContentPageNumber }}
-                </div>
-            @endif
+            <div class="table-page-number">Page {{ $certificatePagesTotal }} of {{ $certificatePagesTotal }}</div>
 
         </div>
 
